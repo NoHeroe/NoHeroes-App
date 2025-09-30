@@ -1,4 +1,4 @@
-```yaml
+
 name: noheroes
 description: NoHeroes app — functional first release (Flutter + SQLite)
 publish_to: 'none'
@@ -40,4 +40,3 @@ flutter:
   assets:
     - assets/
     - assets/images/
-```
