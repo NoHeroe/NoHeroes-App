@@ -1,34 +1,23 @@
-```dart
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'src/core/db/database_provider.dart';
-import 'src/core/theme/app_theme.dart';
-import 'src/features/auth/auth_gate.dart';
-import 'src/features/session/session_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'core/routing/app_router.dart';
+import 'core/theme/app_theme.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseProvider.instance.init();
-  runApp(const NoHeroesApp());
+  runApp(const ProviderScope(child: NoHeroesApp()));
 }
 
-class NoHeroesApp extends StatelessWidget {
+class NoHeroesApp extends ConsumerWidget {
   const NoHeroesApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => SessionProvider()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'NoHeroes',
-        theme: AppTheme.dark,
-        home: const AuthGate(),
-      ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(appRouterProvider);
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.dark,
+      routerConfig: router,
     );
   }
 }
-```
